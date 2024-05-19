@@ -1,6 +1,6 @@
-package com.example.data.models
+package com.streamed.data.models
 
-import com.example.utils.Constants
+import com.streamed.utils.Constants
 
 enum class Roles {
     STUDENT, PROFESSOR, ADMIN

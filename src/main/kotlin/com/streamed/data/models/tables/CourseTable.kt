@@ -1,4 +1,4 @@
-package com.example.data.models.tables
+package com.streamed.data.models.tables
 
 import org.jetbrains.exposed.sql.Table
 import org.jetbrains.exposed.sql.Column

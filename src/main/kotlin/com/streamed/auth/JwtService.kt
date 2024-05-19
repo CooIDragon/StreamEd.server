@@ -1,15 +1,15 @@
-package com.example.auth
+package com.streamed.auth
 
 import com.auth0.jwt.JWT
 import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
-import com.example.data.models.UserModel
+import com.streamed.data.models.UserModel
 import java.time.LocalDateTime
 import java.time.ZoneOffset
 
 class JwtService {
     private val issuer = "streamed-server"
-    private val jwtSecret = System.getenv("JWT_SECRET_KEY")
+    private val jwtSecret = System.getenv("JWT_SECRET")
     private val algorithm = Algorithm.HMAC256(jwtSecret)
 
     private val verifier: JWTVerifier = JWT

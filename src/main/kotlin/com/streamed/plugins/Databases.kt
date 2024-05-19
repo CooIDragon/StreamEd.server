@@ -1,9 +1,9 @@
-package com.example.plugins
+package com.streamed.plugins
 
-import com.example.data.models.tables.CourseTable
-import com.example.data.models.tables.UserTable
-import com.example.data.models.tables.UsersCourseTable
-import com.example.data.models.tables.WebinarTable
+import com.streamed.data.models.tables.CourseTable
+import com.streamed.data.models.tables.UserTable
+import com.streamed.data.models.tables.UsersCourseTable
+import com.streamed.data.models.tables.WebinarTable
 import com.typesafe.config.ConfigFactory
 import com.zaxxer.hikari.HikariConfig
 import io.ktor.server.application.*

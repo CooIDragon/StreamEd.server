@@ -1,6 +1,6 @@
-package com.example.domain.repository
+package com.streamed.domain.repository
 
-import com.example.data.models.UserModel
+import com.streamed.data.models.UserModel
 
 interface UserRepository {
     suspend fun getUserByEmail(email: String): UserModel?

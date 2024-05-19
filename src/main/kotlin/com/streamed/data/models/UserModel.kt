@@ -1,4 +1,4 @@
-package com.example.data.models
+package com.streamed.data.models
 
 import io.ktor.server.auth.*
 
@@ -9,4 +9,5 @@ data class UserModel (
     val password: String,
     val email: String,
     val role: Roles,
+    val isActive: Boolean,
 ): Principal

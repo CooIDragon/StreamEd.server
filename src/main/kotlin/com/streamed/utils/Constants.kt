@@ -1,4 +1,4 @@
-package com.example.utils
+package com.streamed.utils
 
 class Constants {
     object Role {

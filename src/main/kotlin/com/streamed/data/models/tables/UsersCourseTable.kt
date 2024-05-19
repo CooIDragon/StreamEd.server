@@ -1,6 +1,5 @@
-package com.example.data.models.tables
+package com.streamed.data.models.tables
 
-import com.example.data.models.tables.CourseTable.autoIncrement
 import org.jetbrains.exposed.sql.Column
 import org.jetbrains.exposed.sql.Table
 

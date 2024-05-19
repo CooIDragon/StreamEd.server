@@ -1,11 +1,19 @@
 package com.example.plugins
 
+import com.example.data.models.tables.CourseTable
+import com.example.data.models.tables.UserTable
+import com.example.data.models.tables.UsersCourseTable
+import com.example.data.models.tables.WebinarTable
 import com.typesafe.config.ConfigFactory
 import com.zaxxer.hikari.HikariConfig
 import io.ktor.server.application.*
 import io.ktor.server.config.*
 import org.jetbrains.exposed.sql.Database
 import com.zaxxer.hikari.HikariDataSource
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+import org.jetbrains.exposed.sql.SchemaUtils
+import org.jetbrains.exposed.sql.transactions.transaction
 
 object DatabaseFactory {
 
@@ -17,6 +25,11 @@ object DatabaseFactory {
     fun Application.initDatabase() {
         Database.connect(getHikariDatasource())
 
+        transaction {
+            SchemaUtils.create(
+                UserTable, CourseTable, UsersCourseTable, WebinarTable
+            )
+        }
     }
 
     private fun getHikariDatasource(): HikariDataSource {
@@ -33,5 +46,11 @@ object DatabaseFactory {
         config.transactionIsolation = "TRANSACTION_REPEATABLE_READ"
         config.validate()
         return HikariDataSource(config)
+    }
+
+    suspend fun <T> dbQuery(block: () -> T): T {
+        return withContext(Dispatchers.IO) {
+            transaction { block() }
+        }
     }
 }

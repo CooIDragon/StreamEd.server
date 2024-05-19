@@ -13,14 +13,10 @@ import io.ktor.server.auth.jwt.*
 import io.ktor.server.response.*
 import kotlinx.coroutines.runBlocking
 
-fun Application.configureSecurity() {
-    val jwtService = JwtService()
-    val repository = UserRepositoryImpl()
-    val userUseCase = UserUseCase(repository, jwtService)
-
+fun Application.configureSecurity(userUseCase: UserUseCase) {
     authentication {
         jwt("jwt") {
-            verifier(jwtService.getVerifier())
+            verifier(userUseCase.getJwtVerifier())
             realm = "Service server"
             validate {
                 val payload: Payload = it.payload

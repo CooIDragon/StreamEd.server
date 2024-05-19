@@ -10,6 +10,7 @@ object CourseTable: Table() {
     val theme: Column<String> = varchar("theme", 50)
     val name: Column<String> = varchar("name", 30)
     val description: Column<String> = varchar("description", 5000)
+    val ownerId: Column<Int> = integer("owner_id")
 
     override val primaryKey: PrimaryKey = PrimaryKey(id)
 }

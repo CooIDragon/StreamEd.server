@@ -3,12 +3,12 @@ package com.streamed.data.repository
 import com.streamed.data.models.UserModel
 import com.streamed.data.models.getRoleByString
 import com.streamed.data.models.getStringByRole
+import com.streamed.data.models.tables.CourseTable
 import com.streamed.data.models.tables.UserTable
 import com.streamed.domain.repository.UserRepository
 import com.streamed.plugins.DatabaseFactory.dbQuery
-import org.jetbrains.exposed.sql.ResultRow
-import org.jetbrains.exposed.sql.select
-import org.jetbrains.exposed.sql.insert
+import org.jetbrains.exposed.sql.*
+import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 
 class UserRepositoryImpl: UserRepository {
     override suspend fun getUserByEmail(email: String): UserModel? {
@@ -32,6 +32,26 @@ class UserRepositoryImpl: UserRepository {
                 table[role] = user.role.getStringByRole()
                 table[isActive] = user.isActive
             }
+        }
+    }
+
+    override suspend fun updateUser(user: UserModel, email: String) {
+        dbQuery {
+            UserTable.update (
+                where = {
+                    UserTable.email.eq(email) and UserTable.id.eq(user.id)
+                }
+            ) { table ->
+                table[name] = user.name
+                table[surname] = user.surname
+                table[UserTable.email] = user.email
+            }
+        }
+    }
+
+    override suspend fun deleteUser(userId: Int) {
+        dbQuery {
+            CourseTable.deleteWhere { UserTable.id.eq(userId) }
         }
     }
 

@@ -69,10 +69,3 @@ class CourseRepositoryImpl: CourseRepository {
         )
     }
 }
-
-//val id: Int,
-//val duration: Int,
-//val price: Int,
-//val theme: String,
-//val name: String,
-//val description: String

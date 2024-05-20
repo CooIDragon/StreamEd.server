@@ -3,8 +3,11 @@ package com.streamed
 import com.streamed.auth.JwtService
 import com.streamed.data.repository.CourseRepositoryImpl
 import com.streamed.data.repository.UserRepositoryImpl
+import com.streamed.data.repository.WebinarRepositoryImpl
+import com.streamed.domain.repository.WebinarRepository
 import com.streamed.domain.usecase.CourseUseCase
 import com.streamed.domain.usecase.UserUseCase
+import com.streamed.domain.usecase.WebinarUseCase
 import com.streamed.plugins.DatabaseFactory.initDatabase
 import com.streamed.plugins.configureMonitoring
 import com.streamed.plugins.configureSecurity
@@ -22,8 +25,10 @@ fun Application.module() {
     val jwtService = JwtService()
     val userRepository = UserRepositoryImpl()
     val courseRepository = CourseRepositoryImpl()
+    val webinarRepository = WebinarRepositoryImpl()
     val userUseCase = UserUseCase(userRepository, jwtService)
     val courseUseCase = CourseUseCase(courseRepository)
+    val webinarUseCase = WebinarUseCase(webinarRepository)
 
     initDatabase()
     configureMonitoring()

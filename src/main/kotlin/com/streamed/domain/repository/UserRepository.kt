@@ -1,6 +1,5 @@
 package com.streamed.domain.repository
 
-import com.streamed.data.models.CourseModel
 import com.streamed.data.models.UserModel
 
 interface UserRepository {

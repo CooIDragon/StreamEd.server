@@ -13,6 +13,7 @@ import com.streamed.domain.usecase.UsersCourseUseCase
 import com.streamed.domain.usecase.WebinarUseCase
 import com.streamed.plugins.DatabaseFactory.initDatabase
 import com.streamed.plugins.configureMonitoring
+import com.streamed.plugins.configureRouting
 import com.streamed.plugins.configureSecurity
 import com.streamed.plugins.configureSerialization
 import io.ktor.server.application.*
@@ -39,4 +40,5 @@ fun Application.module() {
     configureMonitoring()
     configureSerialization()
     configureSecurity(userUseCase)
+    configureRouting(userUseCase)
 }

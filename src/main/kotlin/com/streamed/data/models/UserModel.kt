@@ -9,5 +9,5 @@ data class UserModel (
     val password: String,
     val email: String,
     val role: Roles,
-    val isActive: Boolean,
+    val isActive: Boolean = false,
 ): Principal

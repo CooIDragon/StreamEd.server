@@ -52,7 +52,7 @@ fun Route.UserRoute(userUseCase: UserUseCase) {
                 call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.WRONG_EMAIL))
             } else {
                 if (user.password == hashFunction(loginRequest.password)) {
-                    call.respond(HttpStatusCode.OK, userUseCase.generateToken(userModel = user))
+                    call.respond(HttpStatusCode.OK, BaseResponse(true, userUseCase.generateToken(userModel = user)))
                 } else {
                     call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.INCORRECT_PASSWORD))
                 }

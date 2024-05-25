@@ -40,5 +40,5 @@ fun Application.module() {
     configureMonitoring()
     configureSerialization()
     configureSecurity(userUseCase)
-    configureRouting(userUseCase, courseUseCase, webinarUseCase)
+    configureRouting(userUseCase, courseUseCase, webinarUseCase, usersCourseUseCase)
 }

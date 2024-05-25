@@ -17,9 +17,9 @@ class Constants {
     }
 
     object Success {
-        const val COURSE_ADDED_SUCCESSFULLY = "Course Added Successfully!"
-        const val COURSE_UPDATE_SUCCESSFULLY = "Course Updated Successfully!"
-        const val COURSE_DELETED_SUCCESSFULLY = "Course Deleted Successfully!"
+        const val ADDED_SUCCESSFULLY = "Added Successfully!"
+        const val UPDATE_SUCCESSFULLY = "Updated Successfully!"
+        const val DELETED_SUCCESSFULLY = "Deleted Successfully!"
     }
 
     object Value {

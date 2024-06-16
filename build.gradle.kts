@@ -12,11 +12,11 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
 }
 
-group = "ru.mvlikhachev"
+group = "com.streamed"
 version = "0.0.1"
 
 application {
-    mainClass.set("ru.mvlikhachev.ApplicationKt")
+    mainClass.set("com.streamed.ApplicationKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")

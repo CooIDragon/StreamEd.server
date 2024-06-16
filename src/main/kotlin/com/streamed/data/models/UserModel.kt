@@ -2,6 +2,7 @@ package com.streamed.data.models
 
 import io.ktor.server.auth.*
 
+@kotlinx.serialization.Serializable
 data class UserModel (
     val id: Int,
     val name: String,
@@ -9,5 +10,5 @@ data class UserModel (
     val password: String,
     val email: String,
     val role: Roles,
-    val isActive: Boolean = false,
+    val isActive: Boolean = true,
 ): Principal

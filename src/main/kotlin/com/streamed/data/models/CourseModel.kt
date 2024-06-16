@@ -1,5 +1,6 @@
 package com.streamed.data.models
 
+@kotlinx.serialization.Serializable
 data class CourseModel(
     val id: Int,
     val duration: Int,

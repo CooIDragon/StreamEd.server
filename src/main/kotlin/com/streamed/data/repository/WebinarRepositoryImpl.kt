@@ -17,7 +17,7 @@ class WebinarRepositoryImpl : WebinarRepository {
                 table[name] = webinar.name
                 table[inviteCode] = uuid.substring(0, 8)
                 table[date] = webinar.date
-                table[courseId] = courseId
+                table[courseId] = webinar.courseId
             }
         }
     }
@@ -36,6 +36,7 @@ class WebinarRepositoryImpl : WebinarRepository {
                 table ->
                 table[name] = webinar.name
                 table[date] = webinar.date
+                table[courseId] = webinar.courseId
             }
         }
     }

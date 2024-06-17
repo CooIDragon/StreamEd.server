@@ -27,6 +27,8 @@ repositories {
 }
 
 dependencies {
+    implementation("io.ktor:ktor-network-tls-certificates")
+    implementation("io.ktor:ktor-server-html-builder:$ktor_version")
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")

@@ -22,7 +22,7 @@ import org.slf4j.LoggerFactory
 import java.io.File
 
 fun main() {
-    val keyStoreFile = File("build/server.jks")
+    val keyStoreFile = File("ssl/server.jks")
     val keyStore = buildKeyStore {
         certificate("sampleAlias") {
             password = "admin"

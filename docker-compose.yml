@@ -24,6 +24,8 @@ services:
       - DB_POSTGRES_USER=postgres
       - HASH_SECRET_KEY=super-secret
       - JWT_SECRET=app-app-secret
+      - EMAIL_USERNAME=stream.ed@ya.ru
+      - EMAIL_PASSWORD=ivqyecyjgjvfcvju
       - PORT=8080
     depends_on:
       - postgres  # Ensure PostgreSQL starts before the Ktor app

@@ -29,7 +29,6 @@ fun Route.WebinarRoute(webinarUseCase: WebinarUseCase) {
             } catch (e: Exception) {
                 call.respond(HttpStatusCode.Conflict, BaseResponse(false, e.message ?: Constants.Error.GENERAL))
             }
-            // Этот метод доработать, запрос sql верный, но не отправляет результат
         }
 
         post("api/v1/create-webinar") {

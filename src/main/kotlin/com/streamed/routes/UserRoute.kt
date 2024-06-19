@@ -134,7 +134,7 @@ fun Route.UserRoute(userUseCase: UserUseCase) {
                     )
 
                     userUseCase.updateUser(user2)
-                    call.respond(HttpStatusCode.OK, "User updated")
+                    call.respond(HttpStatusCode.OK, BaseResponse(true, userUseCase.generateToken(userModel = user2)))
                 } else {
                     call.respond(HttpStatusCode.Conflict, BaseResponse(false, Constants.Error.USER_NOT_FOUND))
                 }

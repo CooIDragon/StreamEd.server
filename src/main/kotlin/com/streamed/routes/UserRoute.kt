@@ -5,15 +5,19 @@ import com.streamed.data.models.UserModel
 import com.streamed.data.models.getRoleByString
 import com.streamed.data.models.requests.LoginRequest
 import com.streamed.data.models.requests.RegisterRequest
+import com.streamed.data.models.requests.ResetPassRequest
+import com.streamed.data.models.requests.VerifyAndUpdPassRequest
 import com.streamed.data.models.response.BaseResponse
 import com.streamed.domain.usecase.UserUseCase
 import com.streamed.utils.Constants
+import com.streamed.utils.EmailUtil
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.auth.*
 import io.ktor.server.request.*
 import io.ktor.server.response.*
 import io.ktor.server.routing.*
+import java.util.*
 
 fun Route.UserRoute(userUseCase: UserUseCase) {
     val hashFunction = {p: String -> hash(password = p)}
@@ -60,6 +64,40 @@ fun Route.UserRoute(userUseCase: UserUseCase) {
             }
         } catch (e: Exception) {
             call.respond(HttpStatusCode.Conflict, BaseResponse(false, e.message ?: Constants.Error.GENERAL))
+        }
+    }
+
+    post("api/v1/reset_password_req") {
+        val resetPassRequest = call.receiveNullable<ResetPassRequest>() ?: kotlin.run {
+            call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.GENERAL))
+            return@post
+        }
+
+        val user = userUseCase.findUserByEmail(resetPassRequest.email.trim().lowercase())
+        if (user != null) {
+            val token = hashFunction(user.email).substring(0, 8)
+
+            EmailUtil.sendPasswordResetEmail(user.email, token)
+            call.respond(HttpStatusCode.OK, BaseResponse(true, "Password reset email sent"))
+        } else {
+            call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.USER_NOT_FOUND))
+        }
+    }
+
+    post("api/v1/reset_password") {
+        val verifyAndUpdPassRequest = call.receiveNullable<VerifyAndUpdPassRequest>() ?: kotlin.run {
+            call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.GENERAL))
+            return@post
+        }
+
+        val user = userUseCase.findUserByEmail(verifyAndUpdPassRequest.email.trim().lowercase())
+        if (user != null) {
+            if (hashFunction(user.email).substring(0, 8) == verifyAndUpdPassRequest.resetToken) {
+                userUseCase.updatePassword(user, newHashPassword = hashFunction(verifyAndUpdPassRequest.newPass))
+                call.respond(HttpStatusCode.OK, BaseResponse(true, "Password updated successfully"))
+            }
+        } else {
+            call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.USER_NOT_FOUND))
         }
     }
 

@@ -12,11 +12,11 @@ plugins {
     id("org.jetbrains.kotlin.plugin.serialization") version "1.9.0"
 }
 
-group = "ru.mvlikhachev"
+group = "com.streamed"
 version = "0.0.1"
 
 application {
-    mainClass.set("ru.mvlikhachev.ApplicationKt")
+    mainClass.set("com.streamed.ApplicationKt")
 
     val isDevelopment: Boolean = project.ext.has("development")
     applicationDefaultJvmArgs = listOf("-Dio.ktor.development=$isDevelopment")
@@ -27,6 +27,9 @@ repositories {
 }
 
 dependencies {
+    implementation("com.sun.mail:javax.mail:1.6.2")
+    implementation("io.ktor:ktor-network-tls-certificates")
+    implementation("io.ktor:ktor-server-html-builder:$ktor_version")
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-content-negotiation-jvm:$ktor_version")
     implementation("io.ktor:ktor-server-core-jvm:$ktor_version")

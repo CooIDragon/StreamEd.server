@@ -11,8 +11,8 @@ class WebinarUseCase (
         webinarRepository.addWebinar(webinar = webinar)
     }
 
-    suspend fun getAllWebinars(courseId: Int) {
-        webinarRepository.getAllWebinars(courseId)
+    suspend fun getAllWebinars(courseId: Int): List<WebinarModel>{
+        return webinarRepository.getAllWebinars(courseId)
     }
 
     suspend fun updateWebinar(webinar: WebinarModel) {

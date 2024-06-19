@@ -14,6 +14,10 @@ class CourseUseCase(
         return courseRepository.getAllCourses()
     }
 
+    suspend fun getMyCourses(userId: Int): List<CourseModel> {
+        return courseRepository.getMyCourses(userId = userId)
+    }
+
     suspend fun updateCourse(course: CourseModel, ownerId: Int) {
         courseRepository.updateCourse(course = course, ownerId = ownerId)
     }

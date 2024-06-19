@@ -29,6 +29,14 @@ class CourseRepositoryImpl: CourseRepository {
         }
     }
 
+    override suspend fun getMyCourses(userId: Int): List<CourseModel> {
+        return dbQuery {
+            CourseTable.select {
+                CourseTable.ownerId eq userId
+            }.mapNotNull { rowToCourse(it) }
+        }
+    }
+
     override suspend fun updateCourse(course: CourseModel, ownerId: Int) {
         dbQuery {
             CourseTable.update (

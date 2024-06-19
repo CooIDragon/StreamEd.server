@@ -3,10 +3,7 @@ package com.streamed.routes
 import com.streamed.auth.hash
 import com.streamed.data.models.UserModel
 import com.streamed.data.models.getRoleByString
-import com.streamed.data.models.requests.LoginRequest
-import com.streamed.data.models.requests.RegisterRequest
-import com.streamed.data.models.requests.ResetPassRequest
-import com.streamed.data.models.requests.VerifyAndUpdPassRequest
+import com.streamed.data.models.requests.*
 import com.streamed.data.models.response.BaseResponse
 import com.streamed.domain.usecase.UserUseCase
 import com.streamed.utils.Constants
@@ -117,5 +114,46 @@ fun Route.UserRoute(userUseCase: UserUseCase) {
             }
         }
 
+        post("api/v1/upd-user") {
+            try {
+                val user = call.principal<UserModel>()
+
+                if (user != null) {
+                    val updUserRequest = call.receiveNullable<UpdUserRequest>() ?: kotlin.run {
+                        call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.GENERAL))
+                        return@post
+                    }
+
+                    val user2 = UserModel(
+                        id = user.id,
+                        email = updUserRequest.email,
+                        name = updUserRequest.name,
+                        surname = updUserRequest.surname,
+                        password = user.password,
+                        role = user.role
+                    )
+
+                    userUseCase.updateUser(user2)
+                    call.respond(HttpStatusCode.OK, "User updated")
+                } else {
+                    call.respond(HttpStatusCode.Conflict, BaseResponse(false, Constants.Error.USER_NOT_FOUND))
+                }
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.GENERAL))
+            }
+        }
+
+        post("api/v1/delete-user") {
+            try {
+                val user = call.principal<UserModel>()
+
+                if (user != null) {
+                    userUseCase.deleteUser(user.id)
+                    call.respond(HttpStatusCode.OK, "User deleted")
+                }
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.GENERAL))
+            }
+        }
     }
 }

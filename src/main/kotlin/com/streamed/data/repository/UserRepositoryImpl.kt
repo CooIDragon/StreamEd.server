@@ -39,19 +39,19 @@ class UserRepositoryImpl: UserRepository {
         dbQuery {
             UserTable.update (
                 where = {
-                    UserTable.email.eq(user.email) and UserTable.id.eq(user.id)
+                    UserTable.id.eq(user.id)
                 }
             ) { table ->
                 table[name] = user.name
                 table[surname] = user.surname
-                table[UserTable.email] = user.email
+                table[email] = user.email
             }
         }
     }
 
     override suspend fun deleteUser(userId: Int) {
         dbQuery {
-            CourseTable.deleteWhere { UserTable.id.eq(userId) }
+            UserTable.deleteWhere { id.eq(userId) }
         }
     }
 

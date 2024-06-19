@@ -48,8 +48,7 @@ fun Route.WebinarRoute(webinarUseCase: WebinarUseCase) {
                     )
 
                     webinarUseCase.addWebinar(webinar = webinar)
-                    call.respond(HttpStatusCode.OK,
-                        BaseResponse(success = true, message = Constants.Success.ADDED_SUCCESSFULLY))
+                    call.respond(HttpStatusCode.OK, webinar)
                 } else {
                     call.respond(HttpStatusCode.Conflict, BaseResponse(false, Constants.Error.ACCESS_RESTRICTED))
                 }

@@ -18,6 +18,8 @@ class UserUseCase (
 
     suspend fun updateUser(userModel: UserModel) = repositoryImpl.updateUser(user = userModel)
 
+    suspend fun deleteUser(userId: Int) = repositoryImpl.deleteUser(userId = userId)
+
     suspend fun updatePassword(userModel: UserModel, newHashPassword: String) = repositoryImpl.updatePassword(user = userModel, newHashPassword)
 
     fun generateToken(userModel: UserModel): String = jwtService.generateToken(user = userModel)

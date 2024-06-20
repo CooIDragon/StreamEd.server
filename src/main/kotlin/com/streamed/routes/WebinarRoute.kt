@@ -24,7 +24,6 @@ fun Route.WebinarRoute(webinarUseCase: WebinarUseCase) {
 
             try {
                 val webinar = webinarUseCase.getAllWebinars(courseRequest)
-                println("Received webinars: $webinar")
                 call.respond(HttpStatusCode.OK, webinar)
             } catch (e: Exception) {
                 call.respond(HttpStatusCode.Conflict, BaseResponse(false, e.message ?: Constants.Error.GENERAL))

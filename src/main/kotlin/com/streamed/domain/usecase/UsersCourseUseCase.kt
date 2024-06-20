@@ -9,4 +9,8 @@ class UsersCourseUseCase(
     suspend fun subscribeUser(usersCourseModel: UsersCourseModel) {
         usersCourseRepository.subscribeUser(usersCourseModel)
     }
+
+    suspend fun getAllSubCourses(userID: Int): List<Int> {
+        return usersCourseRepository.getAllSubCourses(userID)
+    }
 }

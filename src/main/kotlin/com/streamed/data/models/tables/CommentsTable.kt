@@ -10,4 +10,6 @@ object CommentsTable: Table() {
     val webinarId: Column<Int> = integer("webinarId")
     val text: Column<String> = varchar("text", 255)
     val isAnon: Column<Boolean> = bool("isAnon")
+
+    override val primaryKey: PrimaryKey = PrimaryKey(id)
 }

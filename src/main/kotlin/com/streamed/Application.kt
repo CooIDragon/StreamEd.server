@@ -1,14 +1,9 @@
 package com.streamed
 
 import com.streamed.auth.JwtService
-import com.streamed.data.repository.CourseRepositoryImpl
-import com.streamed.data.repository.UserRepositoryImpl
-import com.streamed.data.repository.UsersCourseRepositoryImpl
-import com.streamed.data.repository.WebinarRepositoryImpl
-import com.streamed.domain.usecase.CourseUseCase
-import com.streamed.domain.usecase.UserUseCase
-import com.streamed.domain.usecase.UsersCourseUseCase
-import com.streamed.domain.usecase.WebinarUseCase
+import com.streamed.data.repository.*
+import com.streamed.domain.repository.CommentsRepository
+import com.streamed.domain.usecase.*
 import com.streamed.plugins.DatabaseFactory.initDatabase
 import com.streamed.plugins.configureMonitoring
 import com.streamed.plugins.configureRouting
@@ -56,14 +51,16 @@ fun Application.module() {
     val courseRepository = CourseRepositoryImpl()
     val webinarRepository = WebinarRepositoryImpl()
     val usersCourseRepository = UsersCourseRepositoryImpl()
+    val commentsRepository = CommentsRepositoryImpl()
     val userUseCase = UserUseCase(userRepository, jwtService)
     val courseUseCase = CourseUseCase(courseRepository)
     val webinarUseCase = WebinarUseCase(webinarRepository)
     val usersCourseUseCase = UsersCourseUseCase(usersCourseRepository)
+    val commentsUseCase = CommentsUseCase(commentsRepository)
 
     initDatabase()
     configureMonitoring()
     configureSerialization()
     configureSecurity(userUseCase)
-    configureRouting(userUseCase, courseUseCase, webinarUseCase, usersCourseUseCase)
+    configureRouting(userUseCase, courseUseCase, webinarUseCase, usersCourseUseCase, commentsUseCase)
 }

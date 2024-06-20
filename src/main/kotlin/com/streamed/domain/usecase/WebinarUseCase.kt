@@ -1,6 +1,7 @@
 package com.streamed.domain.usecase
 
 import com.streamed.data.models.WebinarModel
+import com.streamed.data.models.tables.UsersCourseTable.userId
 import com.streamed.domain.repository.WebinarRepository
 
 
@@ -11,8 +12,16 @@ class WebinarUseCase (
         webinarRepository.addWebinar(webinar = webinar)
     }
 
-    suspend fun getAllWebinars(courseId: Int): List<WebinarModel>{
+    suspend fun getAllWebinars(courseId: Int): List<WebinarModel> {
         return webinarRepository.getAllWebinars(courseId)
+    }
+
+    suspend fun getAllSubs(userId: Int): List<WebinarModel> {
+        return webinarRepository.getAllSubs(userId = userId)
+    }
+
+    suspend fun getAllCreated(ownerId: Int): List<WebinarModel> {
+        return webinarRepository.getAllCreated(ownerId = ownerId)
     }
 
     suspend fun updateWebinar(webinar: WebinarModel) {

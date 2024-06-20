@@ -16,7 +16,7 @@ import io.ktor.server.routing.*
 
 fun Route.WebinarRoute(webinarUseCase: WebinarUseCase) {
     authenticate("jwt") {
-        get("api/v1/get-all-webinars") {
+        get("api/v1/get-webinar-by-id") {
             val courseRequest = call.request.queryParameters[Constants.Value.ID]?.toInt() ?: kotlin.run {
                 call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.MISSING_FIELDS))
                 return@get
@@ -25,6 +25,28 @@ fun Route.WebinarRoute(webinarUseCase: WebinarUseCase) {
             try {
                 val webinar = webinarUseCase.getAllWebinars(courseRequest)
                 println("Received webinars: $webinar")
+                call.respond(HttpStatusCode.OK, webinar)
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.Conflict, BaseResponse(false, e.message ?: Constants.Error.GENERAL))
+            }
+        }
+
+        get("api/v1/get-all-webinars-for-sub") {
+            try {
+                val userId = call.principal<UserModel>()!!.id
+                val webinar = webinarUseCase.getAllSubs(userId)
+
+                call.respond(HttpStatusCode.OK, webinar)
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.Conflict, BaseResponse(false, e.message ?: Constants.Error.GENERAL))
+            }
+        }
+
+        get("api/v1/get-all-webinars-for-prof") {
+            try {
+                val ownerId = call.principal<UserModel>()!!.id
+                val webinar = webinarUseCase.getAllCreated(ownerId)
+
                 call.respond(HttpStatusCode.OK, webinar)
             } catch (e: Exception) {
                 call.respond(HttpStatusCode.Conflict, BaseResponse(false, e.message ?: Constants.Error.GENERAL))

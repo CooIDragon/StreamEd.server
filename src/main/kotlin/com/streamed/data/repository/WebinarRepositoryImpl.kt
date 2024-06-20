@@ -1,6 +1,8 @@
 package com.streamed.data.repository
 
 import com.streamed.data.models.WebinarModel
+import com.streamed.data.models.tables.CourseTable
+import com.streamed.data.models.tables.UsersCourseTable
 import com.streamed.data.models.tables.WebinarTable
 import com.streamed.domain.repository.WebinarRepository
 import com.streamed.plugins.DatabaseFactory.dbQuery
@@ -27,6 +29,36 @@ class WebinarRepositoryImpl : WebinarRepository {
             WebinarTable.select {
                 WebinarTable.courseId eq courseId
             }.mapNotNull { rowToWebinar(it) }
+        }
+    }
+
+    override suspend fun getAllSubs(userId: Int): List<WebinarModel> {
+        return dbQuery {
+            val courseIds = UsersCourseTable
+                .slice(UsersCourseTable.courseId)
+                .select { UsersCourseTable.userId eq userId }
+                .map { it[UsersCourseTable.courseId] }
+
+            if (courseIds.isNotEmpty()) {
+                WebinarTable
+                    .select { WebinarTable.courseId inList courseIds }
+                    .mapNotNull { rowToWebinar(it) }
+            } else {
+                emptyList()
+            }
+        }
+    }
+
+    override suspend fun getAllCreated(ownerId: Int): List<WebinarModel> {
+        return dbQuery {
+            val courseIds = CourseTable
+                .slice(CourseTable.id)
+                .select { CourseTable.ownerId eq ownerId }
+                .map { it[CourseTable.id] }
+
+            WebinarTable
+                .select { WebinarTable.courseId inList courseIds }
+                .mapNotNull { rowToWebinar(it) }
         }
     }
 

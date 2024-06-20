@@ -7,4 +7,5 @@ interface CourseRepository {
     suspend fun getAllCourses(): List<CourseModel>
     suspend fun updateCourse(course: CourseModel, ownerId: Int)
     suspend fun deleteCourse(courseId: Int, ownerId: Int)
+    suspend fun getMyCourses(userId: Int): List<CourseModel>
 }

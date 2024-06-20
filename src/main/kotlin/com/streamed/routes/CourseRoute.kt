@@ -25,6 +25,15 @@ fun Route.CourseRoute(courseUseCase: CourseUseCase) {
     }
 
     authenticate("jwt") {
+        post("api/v1/get-my-courses") {
+            try {
+                val userId = call.principal<UserModel>()!!.id
+                val course = courseUseCase.getMyCourses(userId)
+                call.respond(HttpStatusCode.OK, course)
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.Conflict, BaseResponse(false, e.message ?: Constants.Error.GENERAL))
+            }
+        }
         post("api/v1/create-course") {
             val courseRequest = call.receiveNullable<AddCourseRequest>() ?: kotlin.run {
                 call.respond(HttpStatusCode.BadRequest, BaseResponse(false, Constants.Error.MISSING_FIELDS))

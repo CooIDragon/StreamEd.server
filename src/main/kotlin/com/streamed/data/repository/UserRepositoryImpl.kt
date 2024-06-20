@@ -35,23 +35,23 @@ class UserRepositoryImpl: UserRepository {
         }
     }
 
-    override suspend fun updateUser(user: UserModel, email: String) {
+    override suspend fun updateUser(user: UserModel) {
         dbQuery {
             UserTable.update (
                 where = {
-                    UserTable.email.eq(email) and UserTable.id.eq(user.id)
+                    UserTable.id.eq(user.id)
                 }
             ) { table ->
                 table[name] = user.name
                 table[surname] = user.surname
-                table[UserTable.email] = user.email
+                table[email] = user.email
             }
         }
     }
 
     override suspend fun deleteUser(userId: Int) {
         dbQuery {
-            CourseTable.deleteWhere { UserTable.id.eq(userId) }
+            UserTable.deleteWhere { id.eq(userId) }
         }
     }
 
@@ -71,4 +71,15 @@ class UserRepositoryImpl: UserRepository {
         )
     }
 
+    override suspend fun updatePassword(user: UserModel, newHashPassword: String) {
+        dbQuery {
+            UserTable.update (
+                where = {
+                    UserTable.email.eq(user.email) and UserTable.id.eq(user.id)
+                }
+            ) { table ->
+                table[password] = newHashPassword
+            }
+        }
+    }
 }

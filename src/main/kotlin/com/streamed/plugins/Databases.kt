@@ -1,9 +1,6 @@
 package com.streamed.plugins
 
-import com.streamed.data.models.tables.CourseTable
-import com.streamed.data.models.tables.UserTable
-import com.streamed.data.models.tables.UsersCourseTable
-import com.streamed.data.models.tables.WebinarTable
+import com.streamed.data.models.tables.*
 import com.typesafe.config.ConfigFactory
 import com.zaxxer.hikari.HikariConfig
 import io.ktor.server.application.*
@@ -27,7 +24,7 @@ object DatabaseFactory {
 
         transaction {
             SchemaUtils.create(
-                UserTable, CourseTable, UsersCourseTable, WebinarTable
+                UserTable, CourseTable, UsersCourseTable, WebinarTable, CommentsTable
             )
         }
     }

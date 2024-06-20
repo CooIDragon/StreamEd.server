@@ -41,5 +41,16 @@ fun Route.SubscribeRoute(usersCourseUseCase: UsersCourseUseCase) {
                 call.respond(HttpStatusCode.Conflict, BaseResponse(false, e.message ?: Constants.Error.GENERAL))
             }
         }
+
+        get("api/v1/get-all-sub-courses") {
+            val userId = call.principal<UserModel>()!!.id
+
+            try {
+                val course = usersCourseUseCase.getAllSubCourses(userId)
+                call.respond(HttpStatusCode.OK, course)
+            } catch (e: Exception) {
+                call.respond(HttpStatusCode.Conflict, BaseResponse(false, e.message ?: Constants.Error.GENERAL))
+            }
+        }
     }
 }

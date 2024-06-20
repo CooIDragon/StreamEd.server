@@ -27,6 +27,7 @@ repositories {
 }
 
 dependencies {
+    implementation("com.sun.mail:javax.mail:1.6.2")
     implementation("io.ktor:ktor-network-tls-certificates")
     implementation("io.ktor:ktor-server-html-builder:$ktor_version")
     implementation("io.ktor:ktor-server-call-logging-jvm:$ktor_version")

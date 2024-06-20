@@ -8,8 +8,9 @@ services:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: admin
     ports:
-      - "8888:8888"  # Mapping the internal PostgreSQL port 8888 to external port 8888
-    command: ["postgres", "-p", "8888"]  # Run PostgreSQL on port 8888
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data  # Volume для сохранения данных
 
   ktor:
     image: my-ktor-app
@@ -18,15 +19,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "8080:8080"
-    environment:
-      - DB_PASSWORD=admin
-      - DB_POSTGRES_URL=jdbc:postgresql://postgres:8888/StreamEd  # Connect to PostgreSQL on port 8888
-      - DB_POSTGRES_USER=postgres
-      - HASH_SECRET_KEY=super-secret
-      - JWT_SECRET=app-app-secret
-      - EMAIL_USERNAME=stream.ed@ya.ru
-      - EMAIL_PASSWORD=ivqyecyjgjvfcvju
-      - PORT=8080
+    env_file:
+      - ./env.env
     depends_on:
       - postgres  # Ensure PostgreSQL starts before the Ktor app
 
@@ -36,3 +30,6 @@ services:
       - "1935:1935"
     depends_on:
       - ktor
+
+volumes:
+  postgres_data:

@@ -7,7 +7,7 @@ object CommentsTable: Table() {
     val id: Column<Int> = integer("id").autoIncrement()
     val ownerName: Column<String> = varchar("ownerName", 64)
     val ownerSurname: Column<String> = varchar("ownerSurname", 64)
-    val webinarId: Column<Int> = integer("webinarId")
+    val webinarId: Column<Int> = integer("webinarId").references(WebinarTable.id)
     val text: Column<String> = varchar("text", 255)
     val isAnon: Column<Boolean> = bool("isAnon")
 
